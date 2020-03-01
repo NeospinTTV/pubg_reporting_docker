@@ -1,2 +1,3 @@
 # pubg_reporting_docker
-Dockerized pubg_reporting
+Dockerized version of pubg_reporting from https://github.com/djrscally/pubg_reporting
+
