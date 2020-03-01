@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: securepassword
+      MYSQL_DATABASE: pubg
+    volumes:
+      - ./db-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+  app:
+    image: neospin/pubg_reporting_mariadb:latest
+    restart: always
+    environment:
+      PUBGDB_HOST: db
+      PUBGDB_DATABASE: pubg
+      PUBGDB_USERNAME: root
+      PUBGDB_PASSWORD: securepassword
+      PUBG_API_KEY: <<Get one from: https://developer.pubg.com/>>
+      PUBGDB_CONFIG_PATH: /pubg/config/
+    volumes:
+      - ./config:/pubg/config
+      - ./logs/sync.log:/pubg/sync.log
+    links:
+      - db:db
+    depends_on:
+      - db
